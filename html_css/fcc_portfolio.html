@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joseph Project Portfolio</title>
+    <style>
+        body{
+            background-color:#FAF3DD
+        }
+        h1{
+            font-size: 3rem;
+        }
+        h2{
+            font-size: 2rem;
+            font-size: 2rem;
+            font-size: 2rem;
+            text-align: center;
+        }
+        a{
+            text-decoration: none;
+            color: black;
+        }
+        p{
+            padding:50px 20px 20px;
+            font-size: 2rem;
+        }
+        .sections-link{
+            color: #576490;
+            padding:0.5rem 0.8rem 0.5rem 0.8rem;
+            text-align: center;
+        }
+        #navbar{
+            overflow: hidden;
+            display:flex;
+            position:fixed;
+            width:99vw;
+            justify-content: flex-end;
+            font-size: 1rem;
+            border-radius: 10px;
+            background: linear-gradient(145deg, #f05f5ac9, #ca504cbe);
+            box-shadow:  7px 7px 14px #ca574a,
+             -7px -7px 14px #f66b5a;
+        }
+        .sections-link:hover{
+            background: rgba( 224, 90, 84, 0.75 );
+            box-shadow: 0 8px 8px 0 rgba( 31, 38, 135, 0.37 );
+            backdrop-filter: blur( 4px );
+            -webkit-backdrop-filter: blur( 4px );
+            border-radius: 10px; 
+            margin: 0 -0.7rem 0.3rem -0.7rem;
+            text-align:end;
+        }
+        #welcome-section{
+            height: 50vh;
+            text-align:center;
+            padding:25vh;
+        }
+        #projects{
+            background: linear-gradient(145deg,#7796CB,#385A94);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            align-items: center;
+            border-radius: 1%;
+            padding:10px 0 30px;
+        }
+        #links{
+            display: flex;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+            padding:2rem;
+            margin: 0  5rem 5rem 5rem;;
+        }
+        .project-tile{
+            border-style: solid;
+            margin:0.5rem;
+            padding:2rem;
+            text-align: center;
+            width:200px;
+            height:250px;
+            border: #E05A54;
+            border-radius: 43px;
+            background: linear-gradient(145deg, #f06858, #ca574a);
+            box-shadow:  7px 7px 14px #421f1b9a,
+             -7px -7px 14px #83463fb2;
+        }
+        #contact{
+            margin:5px 0;
+            background:linear-gradient(145deg,#A6AEC9,#576490);
+            display: flex;
+            flex-direction: column;
+            height: 50vh;
+            border-radius:2%;
+        }
+
+
+        @media(max-width:500px){
+
+            #navbar{
+            justify-content:space-evenly;
+            font-size: 1rem;
+        }
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar">
+        <a href="#welcome-section" class="sections-link">About</a>
+        <a href="#projects" class="sections-link">Projects</a>
+        <a href="#contact" class="sections-link">Contact</a>
+    </nav>
+        <section id="welcome-section">
+            <h1 id="title">Joseph</h1>
+            <h2>Project Portfolio </h2>
+        </section>
+        <section id="projects">
+            <h2>Projects</h2>
+            <div id="links">
+                <a href="" class="project-tile">
+                    <p>Tribute Page</p>
+                </a>
+                <a href="" class="project-tile">
+                    <p>Survey Page</p>
+                </a>
+                <a href="" class="project-tile">
+                    <p>Product Landing Page</p>
+                </a>
+                <a href="" class="project-tile">
+                    <p>Technical Documentation</p>
+                </a>
+            </div>
+        </section>
+        <section id="contact">
+            <h2>Contact Me</h2>
+            <p><a href="https://www.freecodecamp.org/jthoma20"><img src=""class="logo"></a></p>
+        </section>
+</body>
+</html>

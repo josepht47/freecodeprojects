@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Documentation</title>
+
+    <style>
+        body{
+            display:flex;
+            justify-content: flex-start;
+            font-size:16px;
+        }
+        header{
+            text-align: center;
+            font-size: 1.5rem;
+            border: 1px solid ;
+            border-radius: 5%;
+            padding:.3rem;
+            margin-bottom:0.5rem ;
+        }
+        #navbar{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            border-style: solid;
+            padding: .3rem;
+        }
+
+        #main-doc{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding-left: 2rem;
+        }
+
+        a{
+            text-decoration: None;
+            color:black;
+        }
+        .nav-link{
+            border-style: solid;
+            border-width: 1px;
+            padding: .5rem;
+            border-radius: 5%;
+            margin: 1px 1px 1px 0; 
+            text-align: center;
+        }
+        #breaker{
+            border:solid;
+            border-width: 1px;
+            margin-left: 2rem;
+        }
+        code{
+            border-style: solid;
+            border-color:rgba(169, 169, 169, 0.199);
+            background-color: rgba(169, 169, 169, 0.267);
+        }
+        .h2{
+            text-align: left;
+            font-size: 2rem;
+            border:none;
+            margin: 1rem 1rem 0 1rem;
+        }
+        @media(max-width:800px){
+            p{
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body><nav id="navbar">
+        <header>XGBoost Documentation</header>
+        <a href="#Get_Started_with_XGBoost" class="nav-link">Get Started with XGBoost</a>
+        <a href="#Notes_on_Parameter_Tuning" class="nav-link">Notes on Parameter Tuning</a>
+        <a href="#prediction" class="nav-link">Prediction</a>
+        <a href="#thread_safety" class="nav-link">Thread Safety</a>
+        <a href="#python_examples" class="nav-link">Python Examples </a>
+        <a href="#reference">References</a>
+    </nav>
+    <div id="breaker"></div>  
+    <main id="main-doc">
+        <h1>XGBoost Documentation</h1>
+        <p>XGBoost is an optimized distributed gradient boosting library designed to be highly efficient, flexible and portable. It implements machine learning algorithms under the Gradient Boosting framework. XGBoost provides a parallel tree boosting (also known as GBDT, GBM) that solve many data science problems in a fast and accurate way. The same code runs on major distributed environment (Hadoop, SGE, MPI) and can solve problems beyond billions of examples.</p>
+        <section class="main-section" id="Get_Started_with_XGBoost">
+            <header class="h2">Get Started with XGBoost</header class="h2">
+                <p>This is a quick start tutorial showing snippets for you to quickly try out XGBoost on the demo dataset on a binary classification task.</p>
+                <code>import xgboost as xgb</code>
+                    <p># read in data</p>
+                    <code>dtrain = xgb.DMatrix('demo/data/agaricus.txt.train')
+                    <br>dtest = xgb.DMatrix('demo/data/agaricus.txt.test')</code>
+                    <p># specify parameters via map</p>
+                    <code>param = {'max_depth':2, 'eta':1, 'objective':'binary:logistic' }
+                    <br>num_round = 2
+                    <br>bst = xgb.train(param, dtrain, num_round)</code>
+                    <p># make prediction</p>
+                    <code>preds = bst.predict(dtest)</code>
+        </section>
+        <section class="main-section" id="Notes_on_Parameter_Tuning">
+            <header class="h2">Notes on Parameter Tuning</header class="h2">
+                <p>Parameter tuning is a dark art in machine learning, the optimal parameters of a model can depend on many scenarios. So it is impossible to create a comprehensive guide for doing so.
+
+                    <br>This document tries to provide some guideline for parameters in XGBoost.</p>
+                <p>If you take a machine learning or statistics course, this is likely to be one of the most important concepts. When we allow the model to get more complicated (e.g. more depth), the model has better ability to fit the training data, resulting in a less biased model. However, such complicated model requires more data to fit.
+                    Most of parameters in XGBoost are about bias variance tradeoff. The best model should trade the model complexity with its predictive power carefully. Parameters Documentation will tell you whether each parameter will make the model more conservative or not. This can be used to help you turn the knob between complicated model and simple model.</p>
+                <p>When you observe high training accuracy, but low test accuracy, it is likely that you encountered overfitting problem. There are in general two ways that you can control overfitting in XGBoost:</p>
+                    <ul>
+                       <li> The first way is to directly control model complexity.
+                    
+                            This includes max_depth, min_child_weight and gamma.</li>
+                    
+                        <li>The second way is to add randomness to make training robust to noise.
+                    
+                            This includes subsample and colsample_bytree.
+                    
+                            You can also reduce stepsize eta. Remember to increase num_round when you do so.</li>
+                    </ul>
+        </section>
+        <section class="main-section" id="prediction">
+            <header class="h2">Prediction</header class="h2">
+                <p>There are a number of different prediction options for the xgboost.Booster.predict() method, ranging from pred_contribs to pred_leaf. The output shape depends on types of prediction. Also for multi-class classification problem, XGBoost builds one tree for each class and the trees for each class are called a “group” of trees, so output dimension may change due to used model. After 1.4 release, we added a new parameter called strict_shape, one can set it to True to indicate a more restricted output is desired. Assuming you are using xgboost.Booster, here is a list of possible returns:</p>
+                <ul>
+                    <li>When using normal prediction with strict_shape set to True:
+                        <p>Output is a 2-dim array with first dimension as rows and second as groups. For regression/survival/ranking/binary classification this is equivalent to a column vector with shape[1] == 1. But for multi-class with multi:softprob the number of columns equals to number of classes. If strict_shape is set to False then XGBoost might output 1 or 2 dim array.</p>
+                    </li>
+                    <li>When using output_margin to avoid transformation and strict_shape is set to True:
+                        <p>Similar to the previous case, output is a 2-dim array, except for that multi:softmax has equivalent output of multi:softprob due to dropped transformation. If strict shape is set to False then output can have 1 or 2 dim depending on used model.</p>
+                    </li>
+                    <li>When using preds_contribs with strict_shape set to True:
+                        <p>Output is a 3-dim array, with (rows, groups, columns + 1) as shape. Whether approx_contribs is used does not change the output shape. If the strict shape parameter is not set, it can be a 2 or 3 dimension array depending on whether multi-class model is being used.</p>
+                    </li>
+                    <li>When using preds_interactions with strict_shape set to True:
+                        <p>Output is a 4-dim array, with (rows, groups, columns + 1, columns + 1) as shape. Like the predict contribution case, whether approx_contribs is used does not change the output shape. If strict shape is set to False, it can have 3 or 4 dims depending on the underlying model.</p>
+                    </li>
+                    <li>When using pred_leaf with strict_shape set to True:
+                        <p>Output is a 4-dim array with (n_samples, n_iterations, n_classes, n_trees_in_forest) as shape. n_trees_in_forest is specified by the numb_parallel_tree during training. When strict shape is set to False, output is a 2-dim array with last 3 dims concatenated into 1. Also the last dimension is dropped if it eqauls to 1. When using apply method in scikit learn interface, this is set to False by default.</p>
+                    </li>
+                </ul>
+        </section>
+        <section class="main-section" id="thread_safety">
+            <header class="h2">Thread Safety</header class="h2">
+                <p>After 1.4 release, all prediction functions including normal predict with various parameters like shap value computation and inplace_predict are thread safe when underlying booster is gbtree or dart, which means as long as tree model is used, prediction itself should thread safe. But the safety is only guaranteed with prediction. If one tries to train a model in one thread and provide prediction at the other using the same model the behaviour is undefined. This happens easier than one might expect, for instance we might accidientally call clf.set_params() inside a predict function:</p>
+                <code>def predict_fn(clf: xgb.XGBClassifier, X):
+                    <br>X = preprocess(X)
+                    <br>clf.set_params(predictor="gpu_predictor")  # NOT safe!
+                    <br>clf.set_params(n_jobs=1)  # NOT safe!
+                    <br>return clf.predict_proba(X, iteration_range=(0, 10))</code>
+                                    
+                    <code>with ThreadPoolExecutor(max_workers=10) as e:
+                    e.submit(predict_fn, ...)</code>
+        </section>
+        <section class="main-section" id="python_examples">
+            <header class="h2">Python Examples</header class="h2">
+                <p> </p>
+                <code>import xgboost as xgb
+                    <br>import numpy as np
+                    <br>from sklearn.datasets import make_hastie_10_2</code>
+                    <code># Map labels from {-1, 1} to {0, 1}
+                        <br>labels, y = np.unique(y, return_inverse=True)
+                        <br>X_train, X_test = X[:1600], X[1600:]
+                        <br>y_train, y_test = y[:1600], y[1600:]
+                        
+                        <br><br>param_dist = {'objective':'binary:logistic', 'n_estimators':2}
+                        
+                        <br><br>clf = xgb.XGBModel(**param_dist)
+                        <br># Or you can use: clf = xgb.XGBClassifier(**param_dist)
+                        </code>
+                    <code>clf.fit(X_train, y_train,
+                        <br>eval_set=[(X_train, y_train), (X_test, y_test)],
+                        <br>eval_metric='logloss',
+                        <br>verbose=True)
+                
+                        <br><br># Load evals result by calling the evals_result() function
+                        <br>evals_result = clf.evals_result()</code>
+                    <code>print('Access logloss metric directly from validation_0:')
+                        <br>print(evals_result['validation_0']['logloss'])
+                        
+                        <br>print('')</code>
+                    <code>print('Access metrics through a loop:')
+                        <br>for e_name, e_mtrs in evals_result.items():
+                        <br>print('- {}'.format(e_name))
+                        <br>for e_mtr_name, e_mtr_vals in e_mtrs.items():
+                        <br>print('   - {}'.format(e_mtr_name))
+                        <br>print('      - {}'.format(e_mtr_vals))
+                        
+                        print('')
+                        print('Access complete dict:')
+                        print(evals_result)</code>
+        </section>
+        <section id="reference">
+            <header class="h2">Reference</header class="h2">
+            <p>XG Boost Documentation - https://xgboost.readthedocs.io/en/latest/</p>
+        </section>
+    </main> 
+</body>
+</html>

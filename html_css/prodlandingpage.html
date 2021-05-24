@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Landing Page</title>
+    <style>
+        body{
+            background-color:#9fa1ff6e;
+            font-size: 16px;
+        }
+        #header{
+            background-color: #75693f50;
+            margin:-.2rem -.5rem 0 -.5rem;
+            position:fixed;
+            top: 0;
+            width: 100%;
+            color: #16033A;
+        }
+        #header, #header-logo{
+            display:flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .nav-link{
+            text-decoration: none;
+            color:black;
+            padding: 0.5rem;
+            font-size: 1.5 rem;
+        }
+        .nav-link:hover{
+            font-size: larger;
+            box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.5);
+            border-radius: 10%;
+            background-color:rgba(22,3,58, 0.7);
+        }
+
+        #nav-bar{
+            display: flex;
+            padding:0 1rem 0 1rem;
+            margin-left: -1rem;
+            flex-wrap: wrap;
+        
+        }
+        #header-img {
+            width: 75px;
+            padding-left: 1rem;
+        }
+        #title{
+            font-size: 1.5rem;
+            padding: 0.5rem;
+            text-align: center;
+        }
+        #about{
+            margin-top: 8%;
+        }
+        h2{
+            display:flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding-left: 1rem;
+            font-size: 2rem;
+        }
+        h4{
+            font-size: 1rem;
+        }
+        p{
+            padding: 2rem 2rem 2rem 2rem;
+        }
+        #productli{
+            display:flex;
+            justify-content:center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        #prod{
+            text-decoration: none;
+            color:black;
+            border-color: #8E94F2;
+            border-width: 2px;
+            padding: 2px;
+            margin: 2%;
+            border-style: solid;
+            border-radius:8%;
+            text-align: center;
+            background-color: #8E94F2;
+            box-shadow:1px 1px 10px 0px rgba(13,2,33, 0.4);
+        }
+        #prod:hover{
+            box-shadow:1px 1px 10px 1px rgba(13,2,33, 0.8);
+        }
+
+        #prod-img{
+            width: auto;
+            max-width: 150px;
+            margin: .5rem;
+            border-radius: 8%;
+            
+        }
+        #video{
+            padding: 2rem 0 0 25%;
+            width:50%;
+             height:300px;
+        }
+        #form-contents{
+            display:flex;
+            flex-direction: column;
+            justify-content:center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .br, .br1{
+            border-style: solid;
+            width: 30%;
+        }
+
+        @media(max-width:600px){
+            body{
+                font-size: 14px;
+            }
+            .br1{
+                margin-top: 25% ;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <header id="header">
+        <img src="./Images/Logo 4.png" alt="TCA Logo" id="header-img">
+        <div id="header-logo" >
+            <h1 id="title">The Chakyar Address</h1>
+        </div>
+        <nav id="nav-bar">
+            <a href="#about" class="nav-link">About</a>
+            <a href="#products" class="nav-link">Products</a>
+            <a href="#ogc" class="nav-link"> The OG Chakyar</a>
+        </nav>
+    </header>
+    <div id="about">
+        <div class="br1"></div>
+        <h2 id="abouth">About</h2>
+        <p id="aboutb">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur commodi in assumenda laborum sapiente minima numquam aspernatur maxime ut voluptas provident, eos adipisci obcaecati odit suscipit voluptatum eum? Saepe, quisquam?</p>
+    </div>
+    <div id="products">
+        <div class="br"></div>
+        <h2 id="producth">Products</h2>
+        <div id="productli">
+            <a href="" id="prod">
+                <h4 id="prodname">Recipes</h4>
+                <img src="./Images/spices.jpg" alt="recipes" id="prod-img">
+            </a>
+            <a href="" id="prod">
+                <h4 id="prodname">Photographs</h4>
+                <img src="./Images/photo.jpg" alt="photgraphs" id="prod-img">
+            </a>
+            <a href="" id="prod">
+                <h4 id="prodname">Woodwork</h4>
+                <img src="./Images/woodwork.jpg" alt="woodwork" id="prod-img">
+            </a>
+            <a href="" id="prod">
+                <h4 id="prodname">Articles</h4>
+                <img src="./Images/writer.jpg" alt="articles" id="prod-img">
+            </a>
+        </div>
+    </div>
+    <div id="ogc">
+        <div class="br"></div>
+        <h2 id="ogch">The OG Chakyar</h2>
+        <iframe id="video" src="https://www.youtube.com/embed/dCJrT-AvvgA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="br"></div>
+    <div id="form-contents">
+        <h4>Enter your contact information to receive timely updates:</h4>
+        <form action="https://www.freecodecamp.com/email-submit" id="form">
+            <input type="email" id="email" placeholder="Enter Email ID" required>
+            <input type="submit" id="submit" value="submit"></input>
+        </form>
+    </div>
+
+</body>
+</html>
